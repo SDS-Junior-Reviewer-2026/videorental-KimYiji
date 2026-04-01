@@ -11,10 +11,23 @@ public class CustomerTest {
     public static final String TITLE = "TITLE_NOT_IMPORTANT";
     Customer customer;
 
-    private static Rental createRental(int dayRented, int priceCode) {
-        Movie movie = new Movie(TITLE, priceCode);
+    private Rental createRental(int dayRented, int priceCode) {
+        Movie movie = getMovie(priceCode);
         Rental rental = new Rental(movie, dayRented);
         return rental;
+    }
+
+    private Movie getMovie(int priceCode) {
+        switch (priceCode){
+            case Movie.REGULAR:
+                return new RegularMovie(TITLE);
+            case Movie.NEW_RELEASE:
+                return new NewReleaseMovie(TITLE);
+            case Movie.CHILDRENS:
+                return new ChildrenMovie(TITLE);
+            default:
+                throw new IllegalArgumentException("Invalid movie code");
+        }
     }
 
     @BeforeEach
@@ -24,8 +37,10 @@ public class CustomerTest {
 
     @Test
     public void testSetPrice(){
-        Movie movie = new Movie("testSetPriceCode", 1);
-        movie.setPriceCode(2);
+        Movie movie = new NewReleaseMovie("testSetPriceCode");
+        movie = movie.setPriceCode(2);
+//        Movie movie = new Movie("testSetPriceCode", 1);
+//        movie.setPriceCode(2);
         customer.addRental(new Rental(movie, 1));
         Assertions.assertEquals("Rental Record for Yiji\n" +
                 "\t1.5(testSetPriceCode)\n" +
