@@ -30,7 +30,7 @@ public class CustomerTest {
         Assertions.assertEquals("Rental Record for Yiji\n" +
                 "\t1.5(testSetPriceCode)\n" +
                 "Amount owed is 1.5\n" +
-                "You earned 1 frequent renter pointers", customer.statement()); sta
+                "You earned 1 frequent renter pointers", customer.statement());
     }
 
     @Test
